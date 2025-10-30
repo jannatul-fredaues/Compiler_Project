@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI PanicMode Compiler</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background-color: #1e1e1e;
+    color: #ddd;
+  }
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2b2b2b;
+    padding: 8px 16px;
+  }
+  .navbar button {
+    background: none;
+    color: #ddd;
+    border: none;
+    margin: 0 6px;
+    cursor: pointer;
+  }
+  .navbar button:hover {
+    color: #fff;
+  }
+  .main {
+    display: flex;
+    height: calc(100vh - 50px);
+  }
+  .sidebar {
+    width: 200px;
+    background-color: #252526;
+    padding: 10px;
+  }
+  .sidebar h3 {
+    color: #bbb;
+    font-size: 14px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+  }
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar li {
+    margin: 6px 0;
+    color: #999;
+    cursor: pointer;
+  }
+  .sidebar li:hover {
+    color: #fff;
+  }
+  .editor {
+    flex: 1;
+    background-color: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+  }
+  .editor textarea {
+    flex: 1;
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    border: none;
+    padding: 16px;
+    font-family: monospace;
+    font-size: 15px;
+    outline: none;
+    resize: none;
+  }
+  .output-section {
+    display: flex;
+    background-color: #2a2a2a;
+    border-top: 1px solid #333;
+  }
+  .panel {
+    flex: 1;
+    padding: 12px;
+    border-right: 1px solid #333;
+  }
+  .panel:last-child {
+    border-right: none;
+  }
+  .error {
+    color: #ff6666;
+    white-space: pre-wrap;
+  }
+  .success {
+    color: #80ff80;
+  }
+  .console {
+    background-color: #111;
+    padding: 10px;
+    border-top: 1px solid #333;
+    font-family: monospace;
+  }
+  .input-area {
+    display: flex;
+    background-color: #222;
+    padding: 8px;
+  }
+  .input-area input {
+    flex: 1;
+    background-color: #333;
+    border: none;
+    padding: 6px;
+    color: #fff;
+    outline: none;
+  }
+  .input-area button {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    margin-left: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .input-area button:hover {
+    background-color: #66bb6a;
+  }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo"><strong>🧠 PanicMode Compiler</strong></div>
+  <div>
+    <button>New File</button>
+    <button>Open File</button>
+    <button>Save</button>
+    <button>Share</button>
+  </div>
+  <button id="runBtn" style="background:#4caf50;padding:6px 12px;border-radius:4px;">Run</button>
+</div>
+
+<div class="main">
+  <div class="sidebar">
+    <h3>Explorer</h3>
+    <ul>
+      <li>main.py</li>
+      <li>utils.py</li>
+      <li>test_case.txt</li>
+    </ul>
+  </div>
+
+  <div class="editor">
+    <textarea id="codeArea" spellcheck="false">
+def main():
+    print("Hello, World!")
+
+if __name__ == "__main__":
+    main()
+    </textarea>
+
+    <div class="output-section">
+      <div class="panel" id="outputPanel">
+        <h3>Output</h3>
+        <pre id="outputText" class="success">Ready to compile...</pre>
+      </div>
+      <div class="panel" id="aiPanel">
+        <h3>AI Recommendations</h3>
+        <pre id="aiText">Waiting for code execution...</pre>
+      </div>
+    </div>
+
+    <div class="console">
+      <div class="input-area">
+        <input type="text" id="userInput" placeholder="Enter your name...">
+        <button id="inputRun">Run</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const runBtn = document.getElementById('runBtn');
+  const codeArea = document.getElementById('codeArea');
+  const outputText = document.getElementById('outputText');
+  const aiText = document.getElementById('aiText');
+
+  runBtn.addEventListener('click', () => {
+    const code = codeArea.value;
+
+    outputText.classList.remove('error', 'success');
+    aiText.textContent = "Analyzing code... 🔍";
+
+    setTimeout(() => {
+      // Simulated error detection
+      if (code.includes("pritn")) {
+        outputText.textContent = "Error: 'pritn' is not defined. Did you mean 'print'?";
+        outputText.classList.add('error');
+        aiText.textContent = "💡 Suggestion: Fix typo in line with 'pritn' → 'print'";
+      } else if (code.includes("while True")) {
+        outputText.textContent = "Warning: Infinite loop detected.";
+        outputText.classList.add('error');
+        aiText.textContent = "⚠️ Suggestion: Add a break condition or limit loop iterations.";
+      } else {
+        outputText.textContent = "Hello, World!\n✅ Compilation successful.";
+        outputText.classList.add('success');
+        aiText.textContent = "✨ AI Check: No syntax issues detected. Code looks clean!";
+      }
+    }, 800);
+  });
+</script>
+
+</body>
+</html>
