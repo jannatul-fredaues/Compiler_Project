@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI PanicMode Compiler</title>
+<title>Code Guardian</title>
 <style>
   body {
     margin: 0;
@@ -18,15 +18,21 @@
     background-color: #2b2b2b;
     padding: 8px 16px;
   }
-  .navbar button {
+  .navbar button, select {
     background: none;
     color: #ddd;
     border: none;
     margin: 0 6px;
     cursor: pointer;
+    font-size: 14px;
   }
-  .navbar button:hover {
+  .navbar button:hover, select:hover {
     color: #fff;
+  }
+  select {
+    background-color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
   }
   .main {
     display: flex;
@@ -131,12 +137,25 @@
 <body>
 
 <div class="navbar">
-  <div class="logo"><strong>🧠 PanicMode Compiler</strong></div>
+<div class="logo">
+  <strong>C|G</strong>
+</div>
+
+
   <div>
     <button>New File</button>
     <button>Open File</button>
     <button>Save</button>
     <button>Share</button>
+
+    <!-- Language Selector -->
+    <select id="languageSelect">
+      <option value="python">Python</option>
+      <option value="cpp">C++</option>
+      <option value="java">Java</option>
+      <option value="javascript">JavaScript</option>
+      <option value="c">C</option>
+    </select>
   </div>
   <button id="runBtn" style="background:#4caf50;padding:6px 12px;border-radius:4px;">Run</button>
 </div>
@@ -146,18 +165,17 @@
     <h3>Explorer</h3>
     <ul>
       <li>main.py</li>
-      <li>utils.py</li>
-      <li>test_case.txt</li>
-    </ul>
+      <li><cpp class="html">utils.cpp</cpp></li>
+      <li>App.java</li>
+      <li>script.js</li>
+      <li>README.md</li>
+    </ul>
   </div>
 
   <div class="editor">
     <textarea id="codeArea" spellcheck="false">
-def main():
-    print("Hello, World!")
+# Write your  code here
 
-if __name__ == "__main__":
-    main()
     </textarea>
 
     <div class="output-section">
@@ -173,7 +191,7 @@ if __name__ == "__main__":
 
     <div class="console">
       <div class="input-area">
-        <input type="text" id="userInput" placeholder="Enter your name...">
+        <input type="text" id="userInput" placeholder="Enter your input (if required)...">
         <button id="inputRun">Run</button>
       </div>
     </div>
@@ -185,29 +203,43 @@ if __name__ == "__main__":
   const codeArea = document.getElementById('codeArea');
   const outputText = document.getElementById('outputText');
   const aiText = document.getElementById('aiText');
+  const languageSelect = document.getElementById('languageSelect');
 
   runBtn.addEventListener('click', () => {
     const code = codeArea.value;
+    const language = languageSelect.value;
 
     outputText.classList.remove('error', 'success');
-    aiText.textContent = "Analyzing code... 🔍";
+    aiText.textContent = "Analyzing " + language.toUpperCase() + " code... 🤖";
 
     setTimeout(() => {
-      // Simulated error detection
-      if (code.includes("pritn")) {
+      // Basic simulation of error detection by language
+      if (language === "python" && code.includes("pritn")) {
         outputText.textContent = "Error: 'pritn' is not defined. Did you mean 'print'?";
         outputText.classList.add('error');
-        aiText.textContent = "💡 Suggestion: Fix typo in line with 'pritn' → 'print'";
-      } else if (code.includes("while True")) {
-        outputText.textContent = "Warning: Infinite loop detected.";
-        outputText.classList.add('error');
-        aiText.textContent = "⚠️ Suggestion: Add a break condition or limit loop iterations.";
-      } else {
-        outputText.textContent = "Hello, World!\n✅ Compilation successful.";
+        aiText.textContent = "💡 Suggestion: Fix typo 'pritn' → 'print'";
+      } 
+      else if (language === "cpp" && code.includes("cout <<")) {
+        outputText.textContent = "Output: Hello, World!\n✅ C++ code compiled successfully.";
         outputText.classList.add('success');
-        aiText.textContent = "✨ AI Check: No syntax issues detected. Code looks clean!";
+        aiText.textContent = "✨ Suggestion: Use std::endl for cleaner output formatting.";
+      } 
+      else if (language === "java" && code.includes("System.out.println")) {
+        outputText.textContent = "Output: Hello, World!\n✅ Java compilation successful.";
+        outputText.classList.add('success');
+        aiText.textContent = "✅ No syntax issues detected.";
+      } 
+      else if (language === "javascript" && code.includes("console.log")) {
+        outputText.textContent = "Output: Hello, World!\n✅ JS executed successfully.";
+        outputText.classList.add('success');
+        aiText.textContent = "💡 Tip: You can use template literals for cleaner strings.";
+      } 
+      else {
+        outputText.textContent = "✅ Compilation completed successfully!";
+        outputText.classList.add('success');
+        aiText.textContent = "AI Scan: No major issues found.";
       }
-    }, 800);
+    }, 900);
   });
 </script>
 
