@@ -169,7 +169,6 @@
 
   <div class="editor">
     <textarea id="codeArea" spellcheck="false">
-# Write your  code here
 
     </textarea>
 
@@ -237,11 +236,11 @@
   let currentFile = null; // currently opened file name (null if editing unsaved text)
 
   const templates = {
-    python: '# Welcome to Python\n# Write your Python code here\nprint("Hello, World!")\n',
-    cpp: '// Welcome to C++\n#include <iostream>\nusing namespace std;\nint main() {\n  cout << "Hello, World!" << endl;\n  return 0;\n}\n',
-    java: '// Welcome to Java\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}\n',
-    javascript: '// Welcome to JavaScript\nconsole.log("Hello, World!");\n',
-    c: '/* Welcome to C */\n#include <stdio.h>\nint main() {\n  printf("Hello, World!\\n");\n  return 0;\n}\n'
+    python: '\n# Write your Python code here\n\nprint("Hello, World!")\n',
+    cpp: '// Welcome to C++\n\n#include <iostream>\nusing namespace std;\nint main() {\n  cout << "Hello, World!" << endl;\n  return 0;\n}\n',
+    java: '// Welcome to Java\n\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}\n',
+    javascript: '// Welcome to JavaScript\n\nconsole.log("Hello, World!");\n',
+    c: '// Welcome to C \n\n#include <stdio.h>\nint main() {\n  printf("Hello, World!\\n");\n  return 0;\n}\n'
   };
 
   const extMap = { python: '.py', cpp: '.cpp', java: '.java', javascript: '.js', c: '.c' };
